@@ -1,0 +1,170 @@
+/* Simple Language Switcher Styles */
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.language-switcher.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.language-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(43, 90, 160, 0.3);
+  border-top: 2px solid #2B5AA0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.language-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.language-button:hover {
+  border-color: #2B5AA0;
+  background-color: #f8f9fa;
+}
+
+.language-button.active {
+  background-color: #2B5AA0;
+  color: white;
+  border-color: #2B5AA0;
+}
+
+/* Flag images from assets */
+.flag {
+  width: 20px;
+  height: 14px;
+  background-size: cover;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+.flag.swedish {
+  background-image: url('../assets/SE.png');
+}
+
+.flag.english {
+  background-image: url('../assets/GB.png');
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .language-button {
+    padding: 7px 13px;
+    font-size: 13px;
+  }
+  
+  .flag {
+    width: 19px;
+    height: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .language-button {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  
+  .flag {
+    width: 18px;
+    height: 12px;
+  }
+  
+  .language-switcher {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .language-button {
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 5px;
+    border-radius: 4px;
+  }
+  
+  .flag {
+    width: 16px;
+    height: 11px;
+  }
+  
+  .language-switcher {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .language-button {
+    padding: 4px 8px;
+    font-size: 10px;
+    gap: 4px;
+  }
+  
+  .flag {
+    width: 14px;
+    height: 10px;
+  }
+  
+  .language-switcher {
+    gap: 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .language-button {
+    padding: 3px 6px;
+    font-size: 9px;
+    gap: 3px;
+    border-width: 1px;
+  }
+  
+  .flag {
+    width: 12px;
+    height: 8px;
+    border-width: 0.5px;
+  }
+  
+  .language-switcher {
+    gap: 3px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .language-button {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+  
+  .flag {
+    width: 16px;
+    height: 11px;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
