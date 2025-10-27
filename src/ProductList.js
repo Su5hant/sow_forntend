@@ -277,6 +277,7 @@ const ProductList = () => {
                 </div>
               ) : (
                 <>
+                  {/* Desktop Table */}
                   <table className="products-table">
                     <thead>
                       <tr>
@@ -316,6 +317,57 @@ const ProductList = () => {
                       ))}
                     </tbody>
                   </table>
+
+                  {/* Mobile Cards */}
+                  <div className="mobile-cards">
+                    {Array.isArray(products) && products.map((product) => (
+                      <div key={`mobile-${product.id}`} className="product-card">
+                        <div className="product-card-header">
+                          <h3 className="product-card-title">{product.product}</h3>
+                          <span className="product-card-article">{product.article_number}</span>
+                        </div>
+                        
+                        {product.description && (
+                          <p className="product-card-description">{product.description}</p>
+                        )}
+                        
+                        <div className="product-card-details">
+                          <div className="product-card-detail">
+                            <span className="product-card-label">{t('unit', 'Unit')}</span>
+                            <span className="product-card-value">{product.unit}</span>
+                          </div>
+                          
+                          <div className="product-card-detail">
+                            <span className="product-card-label">{t('stock', 'Stock')}</span>
+                            <div className="product-card-stock">
+                              <span className={`stock-badge ${product.stock <= 10 ? 'low-stock' : 'in-stock'}`}>
+                                {product.stock}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="product-card-detail">
+                            <span className="product-card-label">{t('in_price', 'Cost Price')}</span>
+                            <span className="product-card-value">{product.in_price} SEK</span>
+                          </div>
+                          
+                          <div className="product-card-detail">
+                            <span className="product-card-label">{t('price', 'Sale Price')}</span>
+                            <span className="product-card-value product-card-price">{product.price} SEK</span>
+                          </div>
+                        </div>
+                        
+                        <div className="product-card-actions">
+                          <button className="action-btn view">
+                            {t('view', 'View')}
+                          </button>
+                          <button className="action-btn edit">
+                            {t('edit', 'Edit')}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
                   {/* Pagination */}
                   {totalPages > 1 && (
