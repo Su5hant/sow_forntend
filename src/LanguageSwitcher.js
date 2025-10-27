@@ -3,15 +3,11 @@ import { useI18n } from './contexts/I18nContext';
 import './LanguageSwitcher.css';
 
 const LanguageSwitcher = () => {
-  const { currentLanguage, switchLanguage, getLanguageOptions, loading } = useI18n();
+  const { currentLanguage, changeLanguage, availableLanguages, loading } = useI18n();
 
   const handleLanguageChange = async (languageCode) => {
-    console.log(`LanguageSwitcher: Attempting to change language from ${currentLanguage} to ${languageCode}`);
     if (languageCode !== currentLanguage) {
-      const result = await switchLanguage(languageCode);
-      console.log(`LanguageSwitcher: Language switch result:`, result);
-    } else {
-      console.log('LanguageSwitcher: Language is already selected');
+      await changeLanguage(languageCode);
     }
   };
 
@@ -23,17 +19,15 @@ const LanguageSwitcher = () => {
     );
   }
 
-  let languageOptions = [];
-  try {
-    languageOptions = getLanguageOptions();
-  } catch (error) {
-    console.error('Error getting language options:', error);
-    // Fallback options
-    languageOptions = [
-      { code: 'en', name: 'English' },
-      { code: 'sv', name: 'Svenska' }
-    ];
-  }
+  // Get language options from available languages
+  const getLanguageOptions = () => {
+    return availableLanguages.map(code => ({
+      code,
+      name: code === 'sv' ? 'Svenska' : 'English'
+    }));
+  };
+
+  const languageOptions = getLanguageOptions();
 
   // Ensure we have at least one option
   if (!Array.isArray(languageOptions) || languageOptions.length === 0) {
