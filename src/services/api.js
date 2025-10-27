@@ -1,8 +1,7 @@
 import config from '../config';
 
-// API Configuration
-const API_BASE_URL = config.API_BASE_URL.replace('/api', '');
-const API_PREFIX = '/api';
+// API Configuration - use the API_BASE_URL directly from config
+const API_BASE_URL = config.API_BASE_URL;
 
 // Helper function to get authentication headers
 const getAuthHeaders = (token) => ({
@@ -47,7 +46,7 @@ const apiCall = async (url, options = {}) => {
 };
 
 export const registerUser = async (registrationData) => {
-  const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/register`, {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(registrationData)
@@ -64,7 +63,7 @@ export const registerUser = async (registrationData) => {
 
 // Verify email with token from email
 export const verifyEmail = async (token) => {
-  const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/verify-email`, {
+  const response = await fetch(`${API_BASE_URL}/auth/verify-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token })
@@ -81,7 +80,7 @@ export const verifyEmail = async (token) => {
 
 // Login user (requires verified email)
 export const loginUser = async (email, password) => {
-  const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
@@ -111,7 +110,7 @@ export const refreshToken = async () => {
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/refresh`, {
+    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refresh_token })
@@ -142,7 +141,7 @@ export const getCurrentUser = async () => {
     throw new Error('No access token available');
   }
   
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/auth/me`, {
+  return await apiCall(`${API_BASE_URL}/auth/me`, {
     method: 'GET',
     headers: getAuthHeaders(token)
   });
@@ -150,7 +149,7 @@ export const getCurrentUser = async () => {
 
 // Request password reset
 export const forgotPassword = async (email) => {
-  const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/forgot-password`, {
+  const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
@@ -167,7 +166,7 @@ export const forgotPassword = async (email) => {
 
 // Reset password with token
 export const resetPassword = async (token, newPassword) => {
-  const response = await fetch(`${API_BASE_URL}${API_PREFIX}/auth/reset-password`, {
+  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token, new_password: newPassword })
@@ -186,7 +185,7 @@ export const resetPassword = async (token, newPassword) => {
 export const changePassword = async (currentPassword, newPassword) => {
   const token = localStorage.getItem('accessToken');
   
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/auth/change-password`, {
+  return await apiCall(`${API_BASE_URL}/auth/change-password`, {
     method: 'POST',
     headers: getAuthHeaders(token),
     body: JSON.stringify({ 
@@ -202,19 +201,19 @@ export const changePassword = async (currentPassword, newPassword) => {
 
 // Get all products (public)
 export const getProducts = async () => {
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/`);
+  return await apiCall(`${API_BASE_URL}/products/`);
 };
 
 // Get product by ID
 export const getProduct = async (productId) => {
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/${productId}`);
+  return await apiCall(`${API_BASE_URL}/products/${productId}`);
 };
 
 // Create new product (auth required)
 export const createProduct = async (productData) => {
   const token = localStorage.getItem('accessToken');
   
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/`, {
+  return await apiCall(`${API_BASE_URL}/products/`, {
     method: 'POST',
     headers: getAuthHeaders(token),
     body: JSON.stringify({
@@ -233,7 +232,7 @@ export const createProduct = async (productData) => {
 export const updateProduct = async (productId, productData) => {
   const token = localStorage.getItem('accessToken');
   
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/${productId}`, {
+  return await apiCall(`${API_BASE_URL}/products/${productId}`, {
     method: 'PUT',
     headers: getAuthHeaders(token),
     body: JSON.stringify(productData)
@@ -244,7 +243,7 @@ export const updateProduct = async (productId, productData) => {
 export const deleteProduct = async (productId) => {
   const token = localStorage.getItem('accessToken');
   
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/${productId}`, {
+  return await apiCall(`${API_BASE_URL}/products/${productId}`, {
     method: 'DELETE',
     headers: getAuthHeaders(token)
   });
@@ -252,7 +251,7 @@ export const deleteProduct = async (productId) => {
 
 // Search products
 export const searchProducts = async (query) => {
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/products/search?q=${encodeURIComponent(query)}`);
+  return await apiCall(`${API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`);
 };
 
 // ============================================================================
@@ -350,7 +349,7 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
 // Get all translations for a language
 export const getLanguagePack = async (languageCode = 'en') => {
   try {
-    const url = `${API_BASE_URL}${API_PREFIX}/translations/language/${languageCode}`;
+    const url = `${API_BASE_URL}/translations/language/${languageCode}`;
     const result = await apiCall(url);
     
     // Extract translations from the API response
@@ -423,7 +422,7 @@ export const getLanguagePack = async (languageCode = 'en') => {
 // Get list of available languages
 export const getAvailableLanguages = async () => {
   try {
-    const url = `${API_BASE_URL}${API_PREFIX}/translations/languages`;
+    const url = `${API_BASE_URL}/translations/languages`;
     const result = await apiCall(url);
     
     // Extract language codes from the API response
@@ -443,7 +442,7 @@ export const getAvailableLanguages = async () => {
 
 // Get translations for specific category
 export const getTranslationsByCategory = async (category, languageCode = 'en') => {
-  return await apiCall(`${API_BASE_URL}${API_PREFIX}/translations/category/${category}?language=${languageCode}`);
+  return await apiCall(`${API_BASE_URL}/translations/category/${category}?language=${languageCode}`);
 };
 
 // ============================================================================
@@ -497,7 +496,7 @@ export const validateProductForm = (data) => {
 
 export const checkApiHealth = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}${API_PREFIX}/health`);
+    const response = await fetch(`${API_BASE_URL}/health`);
     return response.ok;
   } catch (error) {
     return false;
