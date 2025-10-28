@@ -110,22 +110,16 @@ const EditProductModal = ({ isOpen, onClose, product, onProductUpdated }) => {
               <label htmlFor="unit">
                 {t('unit', 'Unit')} *
               </label>
-              <select
+              <input
+                type="text"
                 id="unit"
                 name="unit"
                 value={formData.unit}
                 onChange={handleInputChange}
+                placeholder={t('unit_placeholder', 'e.g. pcs, kg, liter, etc.')}
                 required
                 disabled={loading}
-              >
-                <option value="">Select unit</option>
-                <option value="pcs">pcs</option>
-                <option value="kg">kg</option>
-                <option value="liter">liter</option>
-                <option value="meter">meter</option>
-                <option value="box">box</option>
-                <option value="pack">pack</option>
-              </select>
+              />
             </div>
           </div>
 
