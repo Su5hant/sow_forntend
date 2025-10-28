@@ -399,7 +399,7 @@ const AuthScreen = () => {
           <div className="bottom-links">
             <a href="#" className="bottom-link">{t('home', 'Home')}</a>
             <a href="#" className="bottom-link">{t('order', 'Order')}</a>
-            <Link to="/terms" className="bottom-link">{t('terms.link', 'Terms')}</Link>
+            <Link to="/terms" className="bottom-link">{t('terms_link', 'Terms')}</Link>
           </div>
           <div className="copyright">
             © {t('brand_name', 'Lättfaktura')}, CRO nr. 638537, 2025. {t('footer_copyright', 'All rights reserved.')}.

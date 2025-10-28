@@ -57,13 +57,13 @@ const Terms = () => {
         <div className="terms-card">
           <div className="terms-header">
             <h1 className="terms-title">
-              {t('terms.title') || 'Terms and Conditions'}
+              {t('terms_title') || 'Terms and Conditions'}
             </h1>
           </div>
           
           <div className="terms-content">
             <p className="terms-text">
-              {t('terms.full_text') || 'Terms and conditions content will appear here.'}
+              {t('terms_full_text') || 'Terms and conditions content will appear here.'}
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@ const Terms = () => {
           <div className="bottom-links">
             <Link to="/" className="bottom-link">{t('home') || 'Home'}</Link>
             <Link to="/products" className="bottom-link">{t('order') || 'Order'}</Link>
-            <Link to="/terms" className="bottom-link">{t('terms.link') || 'Terms'}</Link>
+            <Link to="/terms" className="bottom-link">{t('terms_link') || 'Terms'}</Link>
           </div>
           <div className="copyright">
             © 2024 {t('brand_name') || 'SOW'}. {t('all_rights_reserved') || 'All rights reserved.'}

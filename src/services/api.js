@@ -239,7 +239,11 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
     'dashboard.overview': 'overview',
     
     'message.success': 'success_message',
-    'message.error': 'error_message'
+    'message.error': 'error_message',
+    
+    'terms.title': 'terms_title',
+    'terms.full_text': 'terms_full_text',
+    'terms.link': 'terms_link'
   };
   
   const mappedTranslations = {};
@@ -264,6 +268,11 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
     'sign_up_subtitle': languageCode === 'sv' ? 'Gå med oss idag och kom igång' : 'Join us today and get started',
     'enter_full_name': languageCode === 'sv' ? 'Ange ditt fullständiga namn' : 'Enter your full name',
     'confirm_password_placeholder': languageCode === 'sv' ? 'Bekräfta ditt lösenord' : 'Confirm your password',
+    'terms_title': languageCode === 'sv' ? 'Villkor' : 'Terms and Conditions',
+    'terms_link': languageCode === 'sv' ? 'Villkor' : 'Terms',
+    'terms_full_text': languageCode === 'sv' 
+      ? 'GENOM ATT klicka på Fakturera Nu så väljer ni att registrera enligt den information som ni har lagt in och texten på registrerings sidan och villkoren här, och accepterar samtidigt villkoren här. Ni kan använda programmet GRATIS i 14 dagar. 123 Fakturera är så lätt och självförklarande att chansen för att du kommer behöva support är minimal, men om du skulle behöva support, så är vi här för dig, med vårt kontor bemannat större delen av dygnet. Efter provperioden så fortsätter abonnemanget och kostar 99 kronor exkl. moms per månad, som faktureras årligen. Om du inte vill behålla programmet, så är det bara att avbryta provperioden genom att ge oss besked inom 14 dagar från registrering. Ni har självklart rätt att avsluta användningen av programmet utan kostnad, genom att ge oss besked per email inom 14 dagar från registrering, att ni inte vill fortsätta med programmet, och betalar då självklart inte heller något. Om vi inte inom 14 dagar från registrering mottar sådant besked från er, så kan ordern av naturliga orsaker inte ändras. Med registrering menas det datum och klockslag då ni valde att trycka på knappen Fakturera Nu. Fakturering sker för ett år i taget. Priset för 123 Fakturera (specialpris kr 99:- / ord. pris kr 159:- per månad) är för årsavgift Start för ett års användning av programmet.'
+      : 'BY clicking on "Invoice Now" you choose to register according to the information you have entered and the text on the registration page and the terms here, and at the same time accept the terms here. You can use the program FREE for 14 days. 123 Fakturera is so easy and self-explanatory that the chance that you will need support is minimal, but if you need support, we are here for you, with our office staffed most of the day. After the trial period, the subscription continues and costs 99 kronor excl. VAT per month, which is invoiced annually. If you do not want to keep the program, simply cancel the trial period by notifying us within 14 days of registration. You naturally have the right to terminate the use of the program free of charge by notifying us by email within 14 days of registration that you do not want to continue with the program, and then naturally do not pay anything either. If we do not receive such notice from you within 14 days of registration, the order cannot be changed for natural reasons. Registration means the date and time when you chose to press the "Invoice Now" button. Invoicing is done for one year at a time. The price for 123 Fakturera (special price SEK 99:- / regular price SEK 159:- per month) is for the annual Start fee for one year of use of the program.'
   };
   
   Object.entries(commonDefaults).forEach(([key, value]) => {
