@@ -1,15 +1,12 @@
 import config from '../config';
 
-// API Configuration - use the API_BASE_URL directly from config
 const API_BASE_URL = config.API_BASE_URL;
 
-// Helper function to get authentication headers
 const getAuthHeaders = (token) => ({
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${token}`
 });
 
-// Generic API call wrapper with error handling
 const apiCall = async (url, options = {}) => {
   try {
     const response = await fetch(url, options);
@@ -17,19 +14,15 @@ const apiCall = async (url, options = {}) => {
     const data = await response.json();
     
     if (!response.ok) {
-      // Handle specific error cases
       if (response.status === 401) {
-        // Token expired, try refresh
         const refreshed = await refreshToken();
         if (refreshed && refreshed.access_token) {
-          // Retry original request with new token
           options.headers = {
             ...options.headers,
             'Authorization': `Bearer ${refreshed.access_token}`
           };
           return await fetch(url, options).then(r => r.json());
         } else {
-          // Refresh failed, clear tokens and redirect to login
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           throw new Error('Session expired. Please login again.');
@@ -61,7 +54,6 @@ export const registerUser = async (registrationData) => {
   return data;
 };
 
-// Verify email with token from email
 export const verifyEmail = async (token) => {
   const response = await fetch(`${API_BASE_URL}/auth/verify-email`, {
     method: 'POST',
@@ -78,7 +70,6 @@ export const verifyEmail = async (token) => {
   return data;
 };
 
-// Login user (requires verified email)
 export const loginUser = async (email, password) => {
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
@@ -93,7 +84,6 @@ export const loginUser = async (email, password) => {
   }
   
   if (data.access_token) {
-    // Store tokens in localStorage
     localStorage.setItem('accessToken', data.access_token);
     localStorage.setItem('refreshToken', data.refresh_token);
   }
@@ -101,7 +91,6 @@ export const loginUser = async (email, password) => {
   return data;
 };
 
-// Refresh access token
 export const refreshToken = async () => {
   const refresh_token = localStorage.getItem('refreshToken');
   
@@ -126,14 +115,12 @@ export const refreshToken = async () => {
       throw new Error(data.detail || 'Token refresh failed');
     }
   } catch (error) {
-    // Clear invalid tokens
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     throw error;
   }
 };
 
-// Get current user information
 export const getCurrentUser = async () => {
   const token = localStorage.getItem('accessToken');
   
@@ -195,21 +182,14 @@ export const changePassword = async (currentPassword, newPassword) => {
   });
 };
 
-// ============================================================================
-// PRODUCT API
-// ============================================================================
-
-// Get all products (public)
 export const getProducts = async () => {
   return await apiCall(`${API_BASE_URL}/products/`);
 };
 
-// Get product by ID
 export const getProduct = async (productId) => {
   return await apiCall(`${API_BASE_URL}/products/${productId}`);
 };
 
-// Create new product (auth required)
 export const createProduct = async (productData) => {
   const token = localStorage.getItem('accessToken');
   
@@ -228,7 +208,6 @@ export const createProduct = async (productData) => {
   });
 };
 
-// Update existing product (auth required)
 export const updateProduct = async (productId, productData) => {
   const token = localStorage.getItem('accessToken');
   
@@ -239,7 +218,6 @@ export const updateProduct = async (productId, productData) => {
   });
 };
 
-// Delete product (auth required)
 export const deleteProduct = async (productId) => {
   const token = localStorage.getItem('accessToken');
   
@@ -249,16 +227,10 @@ export const deleteProduct = async (productId) => {
   });
 };
 
-// Search products
 export const searchProducts = async (query) => {
   return await apiCall(`${API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`);
 };
 
-// ============================================================================
-// TRANSLATIONS API (i18n)
-// ============================================================================
-
-// Map API translation keys to frontend keys
 const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
   const keyMapping = {
     // Auth translations
@@ -364,58 +336,7 @@ export const getLanguagePack = async (languageCode = 'en') => {
       throw new Error('Invalid API response format');
     }
   } catch (error) {
-    // Return fallback translations for offline/backend-down scenarios
-    const fallbackTranslations = {
-      'en': {
-        welcome_back: 'Welcome Back',
-        create_account: 'Create Account',
-        email_address: 'Email Address',
-        password: 'Password',
-        sign_in: 'Sign In',
-        sign_up: 'Sign Up',
-        full_name: 'Full Name',
-        confirm_password: 'Confirm Password',
-        remember_me: 'Remember me',
-        forgot_password: 'Forgot password?',
-        loading: 'Loading...',
-        error: 'Error',
-        or: 'or',
-        continue_google: 'Continue with Google',
-        continue_github: 'Continue with GitHub',
-        no_account: "Don't have an account? ",
-        have_account: "Already have an account? ",
-        email_required: 'Email is required',
-        password_required: 'Password is required',
-        email_invalid: 'Please enter a valid email',
-        password_min_length: 'Password must be at least 6 characters'
-      },
-      'sv': {
-        welcome_back: 'Välkommen tillbaka',
-        create_account: 'Skapa konto',
-        email_address: 'E-postadress',
-        password: 'Lösenord',
-        sign_in: 'Logga in',
-        sign_up: 'Registrera',
-        full_name: 'Fullständigt namn',
-        confirm_password: 'Bekräfta lösenord',
-        remember_me: 'Kom ihåg mig',
-        forgot_password: 'Glömt lösenord?',
-        loading: 'Laddar...',
-        error: 'Fel',
-        or: 'eller',
-        continue_google: 'Fortsätt med Google',
-        continue_github: 'Fortsätt med GitHub',
-        no_account: "Har du inget konto? ",
-        have_account: "Har du redan ett konto? ",
-        email_required: 'E-post krävs',
-        password_required: 'Lösenord krävs',
-        email_invalid: 'Ange en giltig e-postadress',
-        password_min_length: 'Lösenordet måste vara minst 6 tecken'
-      }
-    };
-    
-    const fallback = fallbackTranslations[languageCode] || fallbackTranslations['en'];
-    return fallback;
+    throw error;
   }
 };
 
@@ -436,7 +357,7 @@ export const getAvailableLanguages = async () => {
       throw new Error('Invalid API response format');
     }
   } catch (error) {
-    return ['en', 'sv']; // Fallback languages
+    throw error;
   }
 };
 
@@ -444,10 +365,6 @@ export const getAvailableLanguages = async () => {
 export const getTranslationsByCategory = async (category, languageCode = 'en') => {
   return await apiCall(`${API_BASE_URL}/translations/category/${category}?language=${languageCode}`);
 };
-
-// ============================================================================
-// VALIDATION HELPERS
-// ============================================================================
 
 export const validators = {
   email: (email) => {
@@ -489,10 +406,6 @@ export const validateProductForm = (data) => {
     errors
   };
 };
-
-// ============================================================================
-// HEALTH CHECK
-// ============================================================================
 
 export const checkApiHealth = async () => {
   try {

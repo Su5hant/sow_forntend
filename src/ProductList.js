@@ -3,6 +3,7 @@ import './ProductList.css';
 import { useAuth } from './contexts/AuthContext';
 import { useI18n } from './contexts/I18nContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import EditProductModal from './EditProductModal';
 import config from './config';
 
 const ProductList = () => {
@@ -17,6 +18,8 @@ const ProductList = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [pageSize] = useState(config.PAGINATION.DEFAULT_PAGE_SIZE); // Products per page
   const [error, setError] = useState(null);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -44,8 +47,6 @@ const ProductList = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // Add authorization header if needed
-          // 'Authorization': `Bearer ${token}`
         },
       });
 
@@ -55,7 +56,6 @@ const ProductList = () => {
 
       const data = await response.json();
       
-      // Handle the actual API response structure
       let productsArray = [];
       if (data.products && Array.isArray(data.products)) {
         productsArray = data.products;
@@ -75,43 +75,9 @@ const ProductList = () => {
     } catch (error) {
       setError(error.message);
       
-      // Provide fallback mock data if API is not available
-      const fallbackProducts = [
-        {
-          id: 1,
-          article_number: 'ART001',
-          product: 'Sample Product 1',
-          description: 'This is a sample product for testing',
-          unit: 'pcs',
-          stock: 50,
-          in_price: 25.00,
-          price: 45.00
-        },
-        {
-          id: 2,
-          article_number: 'ART002',
-          product: 'Sample Product 2',
-          description: 'Another sample product for testing',
-          unit: 'kg',
-          stock: 25,
-          in_price: 15.50,
-          price: 30.00
-        }
-      ];
-      
-      // Filter fallback data based on search term
-      let filteredFallback = fallbackProducts;
-      if (search.trim()) {
-        filteredFallback = fallbackProducts.filter(product =>
-          product.product.toLowerCase().includes(search.toLowerCase()) ||
-          product.description.toLowerCase().includes(search.toLowerCase()) ||
-          product.article_number.toLowerCase().includes(search.toLowerCase())
-        );
-      }
-      
-      setProducts(filteredFallback);
-      setTotalProducts(filteredFallback.length);
-      setTotalPages(1);
+      setProducts([]);
+      setTotalProducts(0);
+      setTotalPages(0);
       setCurrentPage(1);
     } finally {
       setLoading(false);
@@ -123,7 +89,6 @@ const ProductList = () => {
     fetchProducts(1, searchTerm);
   }, []);
 
-  // Search with debounce
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchTerm !== undefined) {
@@ -152,9 +117,28 @@ const ProductList = () => {
     setSearchTerm('');
   };
 
+  const handleEditProduct = (product) => {
+    setEditingProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingProduct(null);
+  };
+
+  const handleProductUpdated = (updatedProduct) => {
+    // Update the product in the list
+    setProducts(prevProducts => 
+      prevProducts.map(p => 
+        p.id === updatedProduct.id ? updatedProduct : p
+      )
+    );
+  };
+
   return (
     <>
-      {/* Top Navigation Bar - Same as AuthScreen */}
+      {/* Top Navigation Bar */}
       <nav className="nav-bar">
         <div className="nav-content">
           <a href="#" className="nav-logo">
@@ -246,14 +230,16 @@ const ProductList = () => {
 
           {error && (
             <div className="error-container">
+              <h3>Backend Connection Error</h3>
               <p className="error-message">
-                {t('error_loading_products', 'Error loading products')}: {error}
+                Unable to connect to the backend server. Error: {error}
               </p>
+              <p>Please check your network connection and ensure the backend server is running.</p>
               <button 
                 onClick={() => fetchProducts(currentPage, searchTerm)}
                 className="retry-button"
               >
-                {t('retry', 'Retry')}
+                Retry Connection
               </button>
             </div>
           )}
@@ -261,17 +247,19 @@ const ProductList = () => {
           {loading ? (
             <div className="loading-container">
               <div className="loading-spinner"></div>
-              <p>{t('loading_products', 'Loading products...')}</p>
+              <p>Loading products from backend...</p>
             </div>
           ) : (
             <div className="table-container">
               {!Array.isArray(products) || products.length === 0 ? (
                 <div className="no-results">
-                  <h3>{t('no_products_found', 'No products found')}</h3>
+                  <h3>No Products Available</h3>
                   <p>
                     {searchTerm 
-                      ? t('try_different_search', 'Try adjusting your search terms')
-                      : t('no_products_available', 'No products available')
+                      ? `No products found matching "${searchTerm}". Try different search terms.`
+                      : error 
+                        ? 'Unable to load products from the backend server.'
+                        : 'No products are currently available in the system.'
                     }
                   </p>
                 </div>
@@ -309,7 +297,10 @@ const ProductList = () => {
                             <button className="action-btn view">
                               {t('view', 'View')}
                             </button>
-                            <button className="action-btn edit">
+                            <button 
+                              className="action-btn edit"
+                              onClick={() => handleEditProduct(product)}
+                            >
                               {t('edit', 'Edit')}
                             </button>
                           </td>
@@ -361,7 +352,10 @@ const ProductList = () => {
                           <button className="action-btn view">
                             {t('view', 'View')}
                           </button>
-                          <button className="action-btn edit">
+                          <button 
+                            className="action-btn edit"
+                            onClick={() => handleEditProduct(product)}
+                          >
                             {t('edit', 'Edit')}
                           </button>
                         </div>
@@ -425,6 +419,14 @@ const ProductList = () => {
             </div>
           )}
         </main>
+        
+        {/* Edit Product Modal */}
+        <EditProductModal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          product={editingProduct}
+          onProductUpdated={handleProductUpdated}
+        />
       </div>
     </>
   );

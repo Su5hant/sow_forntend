@@ -16,23 +16,6 @@ const Dashboard = () => {
     <div className="dashboard" key={`dashboard-${currentLanguage}-${forceUpdate}`}>
       <LanguageSwitcher />
       
-      {/* Debug info - remove in production */}
-      <div style={{ 
-        position: 'fixed', 
-        top: '70px', 
-        left: '20px', 
-        fontSize: '11px', 
-        color: 'rgba(255,255,255,0.9)', 
-        fontFamily: 'monospace',
-        background: 'rgba(0,0,0,0.7)',
-        padding: '6px 10px',
-        borderRadius: '4px',
-        zIndex: 1000
-      }}>
-        🌍 Lang: {currentLanguage} | 🔄 Update: {forceUpdate}<br/>
-        📝 Test: "{t('welcome_dashboard', 'FALLBACK')}"
-      </div>
-      
       <div className="dashboard-header">
         <h1>{t('welcome_dashboard', 'Welcome to Dashboard')}</h1>
         <button onClick={handleLogout} className="logout-button">

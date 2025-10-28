@@ -19,7 +19,6 @@ const LanguageSwitcher = () => {
     );
   }
 
-  // Get language options from available languages
   const getLanguageOptions = () => {
     return availableLanguages.map(code => ({
       code,
@@ -27,9 +26,8 @@ const LanguageSwitcher = () => {
     }));
   };
 
-  const languageOptions = getLanguageOptions();
+  let languageOptions = getLanguageOptions();
 
-  // Ensure we have at least one option
   if (!Array.isArray(languageOptions) || languageOptions.length === 0) {
     languageOptions = [{ code: 'en', name: 'English' }];
   }
@@ -40,7 +38,6 @@ const LanguageSwitcher = () => {
 
   return (
     <>
-      {/* Flag-based language switcher for navigation */}
       {languageOptions.map((option) => (
         <button
           key={option.code}

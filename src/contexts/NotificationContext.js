@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import './NotificationSystem.css';
 
-// Create notification context
 const NotificationContext = createContext();
 
-// Custom hook to use notification context
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (!context) {
@@ -13,7 +11,6 @@ export const useNotification = () => {
   return context;
 };
 
-// Notification types
 export const NOTIFICATION_TYPES = {
   SUCCESS: 'success',
   ERROR: 'error',
@@ -21,7 +18,6 @@ export const NOTIFICATION_TYPES = {
   INFO: 'info'
 };
 
-// Individual notification component
 const Notification = ({ notification, onRemove }) => {
   const { id, type, title, message, duration } = notification;
 
@@ -89,7 +85,6 @@ const NotificationContainer = ({ notifications, onRemove }) => {
   );
 };
 
-// Notification provider component
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
@@ -122,7 +117,6 @@ export const NotificationProvider = ({ children }) => {
     setNotifications([]);
   };
 
-  // Convenience methods
   const showSuccess = (message, title, duration) => 
     addNotification({ type: NOTIFICATION_TYPES.SUCCESS, message, title, duration });
 

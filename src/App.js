@@ -7,7 +7,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { I18nProvider } from './contexts/I18nContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 
-// Protected route component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
@@ -23,11 +22,9 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-// Main app component with routing
 const AppContent = () => {
   const { isAuthenticated, loading } = useAuth();
 
-  // Show loading spinner while checking authentication
   if (loading) {
     return (
       <div className="loading-container">
@@ -39,16 +36,13 @@ const AppContent = () => {
 
   return (
     <Routes>
-      {/* Email verification route - accessible without authentication */}
       <Route path="/verify-email" element={<EmailVerification />} />
       
-      {/* Home route - shows auth screen or redirects to products */}
       <Route 
         path="/" 
         element={isAuthenticated ? <Navigate to="/products" replace /> : <AuthScreen />} 
       />
       
-      {/* Products route - protected */}
       <Route 
         path="/products" 
         element={
@@ -58,7 +52,6 @@ const AppContent = () => {
         } 
       />
       
-      {/* Catch all - redirect to home */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

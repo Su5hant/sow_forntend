@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, registerUser, getCurrentUser, refreshToken } from '../services/api';
 
-// Create authentication context
 const AuthContext = createContext();
 
-// Custom hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -13,13 +11,11 @@ export const useAuth = () => {
   return context;
 };
 
-// Authentication provider component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check if user is authenticated on component mount
   useEffect(() => {
     checkAuthStatus();
   }, []);

@@ -13,64 +13,9 @@ const Homepage = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Mock product data - replace with actual API call
   useEffect(() => {
-    const mockProducts = [
-      {
-        id: 1,
-        name: 'Invoice Management System',
-        description: 'Complete invoicing solution for small businesses',
-        price: '299 SEK/month',
-        features: ['Automated invoicing', 'Payment tracking', 'Customer management', 'Tax calculations'],
-        category: 'Software'
-      },
-      {
-        id: 2,
-        name: 'Business Analytics Dashboard',
-        description: 'Comprehensive analytics and reporting tools',
-        price: '199 SEK/month',
-        features: ['Real-time analytics', 'Custom reports', 'Data visualization', 'Export capabilities'],
-        category: 'Analytics'
-      },
-      {
-        id: 3,
-        name: 'Customer Portal',
-        description: 'Self-service portal for your customers',
-        price: '149 SEK/month',
-        features: ['Customer login', 'Invoice viewing', 'Payment portal', 'Support tickets'],
-        category: 'Portal'
-      },
-      {
-        id: 4,
-        name: 'Mobile App Suite',
-        description: 'Mobile applications for business management',
-        price: '399 SEK/month',
-        features: ['iOS & Android apps', 'Offline functionality', 'Push notifications', 'Cloud sync'],
-        category: 'Mobile'
-      },
-      {
-        id: 5,
-        name: 'API Integration Package',
-        description: 'Connect with your existing business tools',
-        price: '99 SEK/month',
-        features: ['REST API access', 'Webhook support', 'Third-party integrations', 'Developer support'],
-        category: 'Integration'
-      },
-      {
-        id: 6,
-        name: 'Enterprise Solution',
-        description: 'Full-scale business management platform',
-        price: 'Contact for pricing',
-        features: ['Custom development', 'Dedicated support', 'Training included', 'SLA guarantee'],
-        category: 'Enterprise'
-      }
-    ];
-
-    // Simulate API loading
-    setTimeout(() => {
-      setProducts(mockProducts);
-      setLoading(false);
-    }, 1000);
+    setProducts([]);
+    setLoading(false);
   }, []);
 
   return (
@@ -161,7 +106,12 @@ const Homepage = () => {
           {loading ? (
             <div className="loading-container">
               <div className="loading-spinner"></div>
-              <p>{t('loading_products', 'Loading products...')}</p>
+              <p>Loading products from backend...</p>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="no-products-message">
+              <h3>No Products Available</h3>
+              <p>Unable to load products from the backend server. Please check the backend connection.</p>
             </div>
           ) : (
             <div className="products-grid">

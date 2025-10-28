@@ -47,7 +47,6 @@ const AuthScreen = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email) {
       newErrors.email = t('email_required', 'Email is required');
@@ -62,7 +61,6 @@ const AuthScreen = () => {
       newErrors.password = t('password_min_length', 'Password must be at least 6 characters');
     }
 
-    // Additional validation for signup
     if (!isLogin) {
       if (!formData.firstName) {
         newErrors.firstName = t('first_name_required', 'First name is required');
@@ -88,12 +86,10 @@ const AuthScreen = () => {
     
     try {
       if (isLogin) {
-        // Handle login
         const result = await login(formData.email, formData.password);
         
         if (result.success) {
           showSuccess(t('login_success', 'Login successful!'), t('welcome_back', 'Welcome back'));
-          // Redirect handled by auth context or parent component
         } else {
           if (result.error.includes('verify')) {
             showError(
@@ -105,7 +101,6 @@ const AuthScreen = () => {
           }
         }
       } else {
-        // Handle registration
         const registrationData = {
           email: formData.email,
           password: formData.password,
@@ -119,10 +114,10 @@ const AuthScreen = () => {
             t('registration_success_message', 'Registration successful! Please check your email to verify your account.'),
             t('registration_success', 'Registration Successful')
           );
-          // Switch to login mode after successful registration
+          // Switch to login mode
           setIsLogin(true);
           setFormData({
-            email: formData.email, // Keep email for easy login
+            email: formData.email,
             password: '',
             firstName: '',
             lastName: ''
@@ -364,7 +359,7 @@ const AuthScreen = () => {
             <div className="forgot-password-overlay">
               <div className="forgot-password-modal">
                 <h3>{t('reset_password', 'Reset Password')}</h3>
-                <p>{t('reset_password_instruction', 'Enter your email address and we\'ll send you a link to reset your password.')}</p>
+                <p>{t('reset_password_instruction', 'Enter your email address and we will send you a link to reset your password.')}</p>
                 <div className="form-group">
                   <input
                     type="email"

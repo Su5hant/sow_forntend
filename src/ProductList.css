@@ -518,7 +518,7 @@
   
   /* Show mobile cards instead */
   .mobile-cards {
-    display: block !important;
+    display: block;
   }
 }
 
@@ -535,7 +535,7 @@
   }
   
   .mobile-cards {
-    display: none !important; /* Hide cards on desktop */
+    display: none; /* Hide cards on desktop */
   }
 }
 

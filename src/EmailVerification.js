@@ -13,7 +13,6 @@ const EmailVerification = () => {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    // Get token from URL parameters
     const tokenFromUrl = searchParams.get('token');
     
     if (tokenFromUrl) {
