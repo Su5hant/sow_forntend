@@ -29,6 +29,9 @@ export const I18nProvider = ({ children }) => {
         if (Array.isArray(languages) && languages.length > 0) {
           setAvailableLanguages(languages);
           
+          const savedLanguage = localStorage.getItem('preferredLanguage');
+          const browserLanguage = navigator.language.split('-')[0];
+          
           const languageToUse = 
             (savedLanguage && languages.includes(savedLanguage)) ? savedLanguage :
             languages.includes(browserLanguage) ? browserLanguage :
@@ -39,7 +42,7 @@ export const I18nProvider = ({ children }) => {
           throw new Error('No languages available from API');
         }
       } catch (error) {
-        setAvailableLanguages([]);
+        setAvailableLanguages(['en', 'sv']);
         const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
         await loadLanguage(savedLanguage);
       } finally {
