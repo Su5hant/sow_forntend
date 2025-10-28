@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './AuthScreen.css';
 import { useAuth } from './contexts/AuthContext';
 import { useI18n } from './contexts/I18nContext';
@@ -398,7 +399,7 @@ const AuthScreen = () => {
           <div className="bottom-links">
             <a href="#" className="bottom-link">{t('home', 'Home')}</a>
             <a href="#" className="bottom-link">{t('order', 'Order')}</a>
-            <a href="#" className="bottom-link">{t('contact', 'Contact us')}</a>
+            <Link to="/terms" className="bottom-link">{t('terms.link', 'Terms')}</Link>
           </div>
           <div className="copyright">
             © {t('brand_name', 'Lättfaktura')}, CRO nr. 638537, 2025. {t('footer_copyright', 'All rights reserved.')}.

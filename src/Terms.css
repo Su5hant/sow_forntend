@@ -1,0 +1,247 @@
+/* Terms Page Styles - Similar to Auth Screen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background using the Swedish coastal image */
+.terms-background {
+  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  background: url('../assets/sverige43.jpg') center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+/* Simple overlay for better readability */
+.terms-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 0;
+}
+
+/* Terms Container */
+.terms-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 80px;
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+/* Terms Card */
+.terms-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.terms-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #2B5AA0;
+}
+
+.terms-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2B5AA0;
+  margin: 0;
+}
+
+/* Content */
+.terms-content {
+  text-align: center;
+}
+
+.terms-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+  text-align: left;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .terms-card {
+    max-width: 700px;
+    padding: 35px;
+  }
+  
+  .terms-title {
+    font-size: 28px;
+  }
+  
+  .terms-text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Fix background image on tablets and mobile */
+  .terms-background {
+    background-attachment: scroll;
+    min-height: 100vh;
+    height: auto;
+    min-height: 100dvh;
+  }
+  
+  .terms-container {
+    padding: 80px 15px 100px;
+  }
+  
+  .terms-card {
+    padding: 30px 25px;
+    max-width: 100%;
+  }
+  
+  .terms-title {
+    font-size: 26px;
+  }
+  
+  .terms-text {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Further background optimizations for mobile */
+  .terms-background {
+    background-attachment: scroll;
+    background-position: center center;
+    min-height: 100vh;
+    height: auto;
+  }
+  
+  .terms-container {
+    padding: 70px 10px 90px;
+  }
+  
+  .terms-card {
+    padding: 25px 20px;
+    border-radius: 8px;
+  }
+  
+  .terms-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+  
+  .terms-title {
+    font-size: 24px;
+  }
+  
+  .terms-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Mobile-first optimizations */
+  .terms-background {
+    background-position: center center;
+    background-size: cover;
+    background-attachment: scroll;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+  }
+  
+  .terms-container {
+    padding: 65px 10px 85px;
+  }
+  
+  .terms-card {
+    padding: 20px 15px;
+    width: 100%;
+    max-width: calc(100vw - 20px);
+  }
+  
+  .terms-header {
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+  }
+  
+  .terms-title {
+    font-size: 22px;
+  }
+  
+  .terms-text {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 360px) {
+  .terms-container {
+    padding: 60px 5px 80px;
+  }
+  
+  .terms-card {
+    padding: 15px 10px;
+  }
+  
+  .terms-title {
+    font-size: 20px;
+  }
+  
+  .terms-text {
+    font-size: 12px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .terms-container {
+    padding: 70px 15px 70px;
+  }
+  
+  .terms-card {
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  
+  .terms-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .terms-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .terms-text {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}

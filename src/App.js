@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import AuthScreen from './AuthScreen';
 import ProductList from './ProductList';
 import EmailVerification from './EmailVerification';
+import Terms from './Terms';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { I18nProvider } from './contexts/I18nContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -37,6 +38,7 @@ const AppContent = () => {
   return (
     <Routes>
       <Route path="/verify-email" element={<EmailVerification />} />
+      <Route path="/terms" element={<Terms />} />
       
       <Route 
         path="/" 
