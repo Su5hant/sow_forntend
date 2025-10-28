@@ -134,7 +134,6 @@ export const getCurrentUser = async () => {
   });
 };
 
-// Request password reset
 export const forgotPassword = async (email) => {
   const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
     method: 'POST',
@@ -151,7 +150,6 @@ export const forgotPassword = async (email) => {
   return data;
 };
 
-// Reset password with token
 export const resetPassword = async (token, newPassword) => {
   const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
     method: 'POST',
@@ -168,7 +166,6 @@ export const resetPassword = async (token, newPassword) => {
   return data;
 };
 
-// Change password (authenticated user)
 export const changePassword = async (currentPassword, newPassword) => {
   const token = localStorage.getItem('accessToken');
   
@@ -233,7 +230,6 @@ export const searchProducts = async (query) => {
 
 const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
   const keyMapping = {
-    // Auth translations
     'auth.login': 'sign_in',
     'auth.register': 'sign_up',
     'auth.forgot_password': 'forgot_password',
@@ -242,18 +238,15 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
     'auth.email_validation': 'email_required',
     'auth.password_required': 'password_required',
     
-    // Navigation translations
     'nav.home': 'home',
     'nav.order': 'order',
     'nav.customers': 'customers',
     'nav.about': 'about',
     'nav.contact': 'contact',
     
-    // Language translations
     'language.english': 'english',
     'language.swedish': 'svenska',
     
-    // UI translations
     'ui.save': 'save',
     'ui.cancel': 'cancel',
     'ui.delete': 'delete',
@@ -265,32 +258,26 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
     'ui.no': 'no',
     'ui.confirm': 'confirm',
     
-    // Brand translations
     'brand.name': 'brand_name',
     
-    // Product translations
     'product.name': 'product_name',
     'product.price': 'price',
     'product.description': 'description',
     
-    // Dashboard translations
     'dashboard.welcome': 'welcome_dashboard',
     'dashboard.overview': 'overview',
     
-    // Message translations
     'message.success': 'success_message',
     'message.error': 'error_message'
   };
   
   const mappedTranslations = {};
   
-  // Map API keys to frontend keys
   Object.entries(apiTranslations).forEach(([apiKey, value]) => {
     const frontendKey = keyMapping[apiKey] || apiKey.replace(/\./g, '_');
     mappedTranslations[frontendKey] = value;
   });
   
-  // Add common frontend keys that might be missing
   const commonDefaults = {
     'welcome_back': languageCode === 'sv' ? 'Välkommen tillbaka' : 'Welcome Back',
     'create_account': languageCode === 'sv' ? 'Skapa konto' : 'Create Account',
@@ -308,7 +295,6 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
     'confirm_password_placeholder': languageCode === 'sv' ? 'Bekräfta ditt lösenord' : 'Confirm your password',
   };
   
-  // Add defaults for missing keys
   Object.entries(commonDefaults).forEach(([key, value]) => {
     if (!mappedTranslations[key]) {
       mappedTranslations[key] = value;
@@ -318,19 +304,15 @@ const mapApiKeysToFrontendKeys = (apiTranslations, languageCode) => {
   return mappedTranslations;
 };
 
-// Get all translations for a language
 export const getLanguagePack = async (languageCode = 'en') => {
   try {
     const url = `${API_BASE_URL}/translations/language/${languageCode}`;
     const result = await apiCall(url);
     
-    // Extract translations from the API response
     if (result && result.translations && typeof result.translations === 'object') {
-      // Map API keys to frontend keys
       const mappedTranslations = mapApiKeysToFrontendKeys(result.translations, languageCode);
       return mappedTranslations;
     } else if (typeof result === 'object' && !result.translations) {
-      // If API returns translations directly
       return mapApiKeysToFrontendKeys(result, languageCode);
     } else {
       throw new Error('Invalid API response format');
@@ -340,18 +322,15 @@ export const getLanguagePack = async (languageCode = 'en') => {
   }
 };
 
-// Get list of available languages
 export const getAvailableLanguages = async () => {
   try {
     const url = `${API_BASE_URL}/translations/languages`;
     const result = await apiCall(url);
     
-    // Extract language codes from the API response
     if (result && result.languages && Array.isArray(result.languages)) {
       const languageCodes = result.languages.map(lang => lang.code);
       return languageCodes;
     } else if (Array.isArray(result)) {
-      // If API returns array directly
       return result;
     } else {
       throw new Error('Invalid API response format');
@@ -361,7 +340,6 @@ export const getAvailableLanguages = async () => {
   }
 };
 
-// Get translations for specific category
 export const getTranslationsByCategory = async (category, languageCode = 'en') => {
   return await apiCall(`${API_BASE_URL}/translations/category/${category}?language=${languageCode}`);
 };
@@ -385,7 +363,6 @@ export const validators = {
   }
 };
 
-// Form validation for products
 export const validateProductForm = (data) => {
   const errors = {};
   

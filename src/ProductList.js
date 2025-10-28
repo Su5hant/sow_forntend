@@ -16,7 +16,7 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
-  const [pageSize] = useState(config.PAGINATION.DEFAULT_PAGE_SIZE); // Products per page
+  const [pageSize] = useState(config.PAGINATION.DEFAULT_PAGE_SIZE);
   const [error, setError] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -25,7 +25,6 @@ const ProductList = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Fetch products from backend API
   const fetchProducts = async (page = 1, search = '') => {
     try {
       setLoading(true);
@@ -84,7 +83,6 @@ const ProductList = () => {
     }
   };
 
-  // Initial load
   useEffect(() => {
     fetchProducts(1, searchTerm);
   }, []);
@@ -128,7 +126,6 @@ const ProductList = () => {
   };
 
   const handleProductUpdated = (updatedProduct) => {
-    // Update the product in the list
     setProducts(prevProducts => 
       prevProducts.map(p => 
         p.id === updatedProduct.id ? updatedProduct : p
@@ -210,7 +207,7 @@ const ProductList = () => {
                 onChange={handleSearchChange}
                 className="search-input"
               />
-              <div className="search-icon">🔍</div>
+              <div className="search-icon"></div>
             </div>
             <div className="search-results-info">
               <span>

@@ -35,7 +35,6 @@ const AuthScreen = () => {
       [name]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -54,7 +53,6 @@ const AuthScreen = () => {
       newErrors.email = t('email_invalid', 'Please enter a valid email');
     }
 
-    // Password validation
     if (!formData.password) {
       newErrors.password = t('password_required', 'Password is required');
     } else if (formData.password.length < 6) {
@@ -114,7 +112,6 @@ const AuthScreen = () => {
             t('registration_success_message', 'Registration successful! Please check your email to verify your account.'),
             t('registration_success', 'Registration Successful')
           );
-          // Switch to login mode
           setIsLogin(true);
           setFormData({
             email: formData.email,

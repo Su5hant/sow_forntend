@@ -146,22 +146,22 @@ const Homepage = () => {
           </div>
           <div className="features-grid">
             <div className="feature-item">
-              <div className="feature-icon">📊</div>
+              <div className="feature-icon"></div>
               <h3>{t('easy_to_use', 'Easy to Use')}</h3>
               <p>{t('easy_to_use_desc', 'Intuitive interface designed for businesses of all sizes')}</p>
             </div>
             <div className="feature-item">
-              <div className="feature-icon">🔒</div>
+              <div className="feature-icon"></div>
               <h3>{t('secure', 'Secure & Reliable')}</h3>
               <p>{t('secure_desc', 'Bank-level security with 99.9% uptime guarantee')}</p>
             </div>
             <div className="feature-item">
-              <div className="feature-icon">🚀</div>
+              <div className="feature-icon"></div>
               <h3>{t('fast_setup', 'Fast Setup')}</h3>
               <p>{t('fast_setup_desc', 'Get started in minutes with our quick setup process')}</p>
             </div>
             <div className="feature-item">
-              <div className="feature-icon">💬</div>
+              <div className="feature-icon"></div>
               <h3>{t('support', '24/7 Support')}</h3>
               <p>{t('support_desc', 'Expert support team available whenever you need help')}</p>
             </div>

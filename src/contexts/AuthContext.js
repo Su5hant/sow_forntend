@@ -29,14 +29,12 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         setIsAuthenticated(true);
       } catch (error) {
-        // Try to refresh token
         try {
           await refreshToken();
           const userData = await getCurrentUser();
           setUser(userData);
           setIsAuthenticated(true);
         } catch (refreshError) {
-          // Clear invalid tokens
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           setUser(null);
@@ -56,7 +54,6 @@ export const AuthProvider = ({ children }) => {
       const response = await loginUser(email, password);
       
       if (response.access_token) {
-        // Get user data after successful login
         const userData = await getCurrentUser();
         setUser(userData);
         setIsAuthenticated(true);
@@ -79,16 +76,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    // Clear tokens from storage
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     
-    // Clear user state
     setUser(null);
     setIsAuthenticated(false);
-    
-    // Optional: Call logout endpoint if backend has one
-    // await apiCall('/auth/logout', { method: 'POST' });
   };
 
   const updateUser = (userData) => {

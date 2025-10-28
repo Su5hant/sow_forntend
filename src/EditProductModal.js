@@ -45,7 +45,6 @@ const EditProductModal = ({ isOpen, onClose, product, onProductUpdated }) => {
     setError('');
 
     try {
-      // Convert numeric fields
       const updatedData = {
         ...formData,
         in_price: parseFloat(formData.in_price) || 0,

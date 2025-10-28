@@ -8,7 +8,7 @@ const EmailVerification = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [verificationStatus, setVerificationStatus] = useState('loading'); // loading, success, error
+  const [verificationStatus, setVerificationStatus] = useState('loading');
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
 
@@ -67,7 +67,7 @@ const EmailVerification = () => {
 
           {verificationStatus === 'success' && (
             <div className="verification-success">
-              <div className="success-icon">✅</div>
+              <div className="success-icon"></div>
               <h2>{t('verification_successful', 'Verification Successful!')}</h2>
               <p>{message}</p>
               <button onClick={goToLogin} className="btn-primary">
@@ -78,7 +78,7 @@ const EmailVerification = () => {
 
           {verificationStatus === 'error' && (
             <div className="verification-error">
-              <div className="error-icon">❌</div>
+              <div className="error-icon"></div>
               <h2>{t('verification_failed', 'Verification Failed')}</h2>
               <p>{message}</p>
               <div className="verification-actions">
