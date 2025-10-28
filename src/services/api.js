@@ -150,35 +150,6 @@ export const forgotPassword = async (email) => {
   return data;
 };
 
-export const resetPassword = async (token, newPassword) => {
-  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token, new_password: newPassword })
-  });
-  
-  const data = await response.json();
-  
-  if (!response.ok) {
-    throw new Error(data.detail || data.message || 'Password reset failed');
-  }
-  
-  return data;
-};
-
-export const changePassword = async (currentPassword, newPassword) => {
-  const token = localStorage.getItem('accessToken');
-  
-  return await apiCall(`${API_BASE_URL}/auth/change-password`, {
-    method: 'POST',
-    headers: getAuthHeaders(token),
-    body: JSON.stringify({ 
-      current_password: currentPassword, 
-      new_password: newPassword 
-    })
-  });
-};
-
 export const getProducts = async () => {
   return await apiCall(`${API_BASE_URL}/products/`);
 };
@@ -382,13 +353,4 @@ export const validateProductForm = (data) => {
     isValid: Object.keys(errors).length === 0,
     errors
   };
-};
-
-export const checkApiHealth = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/health`);
-    return response.ok;
-  } catch (error) {
-    return false;
-  }
 };
